@@ -57,24 +57,3 @@ $(".activities").click(function() {
     $express.parent().addClass('isDisabled');
   }
 });
-
-EXAMPLE
-$('#noneAboveCheck').change(function () {
-    $('#noneAbove').toggle(this.checked);
-}).change();
-
-$('#incarcerated, #support').change(function () {
-    if ($(this).attr("checked")) {
-        $('#noneAboveCheck').attr('disabled', true);
-    } else {
-        $('#noneAboveCheck').attr('disabled', false);
-    }
-});
-//.parent().addClass('isDisabled')
-  //if $("input [name='js-frameworks']").prop("selected",true) {
-
-//  function() {
-//  $( this ).next( "span" ).css( "display", "inline" ).fadeOut( 1000 );
-//});
-
-//$('[id*=profileForm]').find('input:first').focus();

@@ -52,6 +52,7 @@ $("#design").on('change', function() {
 const $jsFrameworks = $("input[name='js-frameworks']");
 const $express = $("input[name='express']");
 
+//  Deselect conflicting activities when one is selected
 $(".activities").click(function() {
   if ($jsFrameworks.prop('checked')) {
     $express.parent().addClass('isDisabled');

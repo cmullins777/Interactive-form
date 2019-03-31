@@ -57,10 +57,12 @@ const $node = $("input[name='node']");
 const $mainConf = $("input[name='all']");
 const $buildTools = $("input[name='build-tools']");
 const $npm = $("input[name='npm']");
-let $cost = 0;
-let costAlert = ("<span> Your Total is: " + '$' + $cost + " </span>");
-let $activities = $('.activities');
-$activities.append(costAlert);
+let cost = 0;
+let $costUpdate = $("<span name='costUpdate'> 0 </span>");
+let $costAlert = $("<span> Your Total is: " + '$' + " </span> ");
+//let $activities = $('.activities');
+//$activities.append($costAlert);
+//$costAlert.append(actCost);
 
 //  Deselect conflicting activities when one is selected
 //  Reinstate option if checkbox is unclicked
@@ -100,16 +102,31 @@ $($node).click(function() {
 //Add, Subtract extra $100 for Main Conference
 $checkbox.change(function(event) {
     if ($(this).prop('checked')) {
-    $cost += 100;
+    cost += 100;
+    $costUpdate.text(cost);
   } else if ($(this).prop('checked', false)) {
-    $cost -= 100;
+    cost -= 100;
+    $costUpdate.text(cost);
   }
 });
 
 $mainConf.change(function(event) {
     if ($(this).prop('checked')) {
-    $cost += 100;
+    cost += 100;
+    $costUpdate.text(cost);
   } else if ($(this).prop('checked', false)) {
-    $cost -= 100;
+    cost -= 100;
+    $costUpdate.text(cost);
   }
 });
+
+//$costAlert = $("<span> Your Total is: " + '$$' + cost + " </span> ");
+$activities = $('.activities');
+$activities.append($costAlert);
+$costAlert.append($costUpdate);
+//Update DOM with new value of $cost
+function updateCost(cost){
+
+}
+
+updateCost();

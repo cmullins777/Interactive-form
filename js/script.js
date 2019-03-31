@@ -49,12 +49,67 @@ $("#design").on('change', function() {
   }
 });
 
+const $checkbox = $("input[type='checkbox']");
 const $jsFrameworks = $("input[name='js-frameworks']");
 const $express = $("input[name='express']");
+const $jsLibs = $("input[name='js-libs']");
+const $node = $("input[name='node']");
+const $mainConf = $("input[name='all']");
+const $buildTools = $("input[name='build-tools']");
+const $npm = $("input[name='npm']");
+let $cost = 0;
+let costAlert = ("<span> Your Total is: " + '$' + $cost + " </span>");
+let $activities = $('.activities');
+$activities.append(costAlert);
 
 //  Deselect conflicting activities when one is selected
-$(".activities").click(function() {
+//  Reinstate option if checkbox is unclicked
+$($jsFrameworks).click(function() {
   if ($jsFrameworks.prop('checked')) {
-    $express.parent().addClass('isDisabled');
+    $express.attr('disabled', 'disabled').parent().css("text-decoration", "line-through");
+  } else if ($jsFrameworks.prop('checked', false)) {
+    $express.attr('disabled', false).parent().css("text-decoration", "none");
+  }
+});
+
+$($express).click(function() {
+  if ($express.prop('checked')) {
+    $jsFrameworks.attr('disabled', 'disabled').parent().css("text-decoration", "line-through");
+  } else if ($express.prop('checked', false)) {
+    $jsFrameworks.attr('disabled', false).parent().css("text-decoration", "none");
+  }
+});
+
+$($jsLibs).click(function() {
+  if ($jsLibs.prop('checked')) {
+    $node.attr('disabled', 'disabled').parent().css("text-decoration", "line-through");
+  } else if ($jsLibs.prop('checked', false)) {
+    $node.attr('disabled', false).parent().css("text-decoration", "none");
+  }
+});
+
+$($node).click(function() {
+  if ($node.prop('checked')) {
+    $jsLibs.attr('disabled', 'disabled').parent().css("text-decoration", "line-through");
+  } else if ($node.prop('checked', false)) {
+    $jsLibs.attr('disabled', false).parent().css("text-decoration", "none");
+  }
+});
+
+//Display running total for selected Activities
+//Add, Subtract extra $100 for Main Conference
+$checkbox.change(function(event) {
+    if ($(this).prop('checked')) {
+    $cost += 100;
+  } else if ($(this).prop('checked', false)) {
+    $cost -= 100;
+  }
+});
+
+$mainConf.change(function(event) {
+    if ($(this).prop('checked')) {
+    $cost += 100;
+  } else if ($(this).prop('checked', false)) {
+    $cost -= 100;
   }
 });

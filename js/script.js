@@ -9,7 +9,8 @@ FSJS project 3 - Interactive Form
   Declare global variables, including;
   Set focus on first field (name) on page load
 **/
-$("input[name='user_name']").focus();
+$name = $("input[name='user_name']")
+$name.focus();
 $( "#other-title" ).hide();
 const $otherInput = $('#other-title');
 
@@ -124,25 +125,40 @@ $activities = $('.activities');
 $activities.append($costAlert);
 $costAlert.append($costUpdate);
 
-// On page load, display credit card payment option
-$("select option[value='credit card']").attr("selected", true);
 // Display payment info for selected payment option
 const $creditCard = $("select option[value='credit card']");
 const $paypal = $("select option[value='paypal']");
 const $bitcoin = $("select option[value='bitcoin']")
 const $payment = $("select[name='user_payment']");
-const $pPaypal = $("p:contains('PayPal')");
-const $pBitcoin = $("p:contains('Bitcoin')");
+const $p_Paypal = $("p:contains('PayPal')");
+const $p_Bitcoin = $("p:contains('Bitcoin')");
 const $ccDetails = $("div[id='credit-card']").find("div, label, select");
+
+//On page load, display credit card with no Paypal/Bitcoin info
+$("select option[value='credit card']").attr("selected", true);
+$p_Paypal.hide();
+$p_Bitcoin.hide();
 
 // When PayPal is selected, hide other payment method details
 $payment.change(function(event) {
   if ($paypal.attr("selected", true)) {
     $ccDetails.hide();
-    $pPaypal.show();
-    $pBitcoin.hide();
+    $p_Paypal.show();
+    $p_Bitcoin.hide();
  }
 });
+
+
+const $register = $("button[type='submit']");
+let $nameCheck = $name.val();
+
+$register.click(function(event) {
+  if ($nameCheck === " ") {
+      $name.
+  }
+});
+
+
 
 // ($bitcoin.attr("selected", true)) {
 //   $ccDetails.hide();

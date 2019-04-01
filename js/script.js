@@ -140,11 +140,12 @@ $p_Paypal.hide();
 $p_Bitcoin.hide();
 
 // When PayPal is selected, hide other payment method details
+$ccDetails.hide();
+$p_Paypal.hide();
+$p_Bitcoin.hide();
+
 $payment.change(function(event) {
-  let target = $((this).event.target);
-  $ccDetails.hide();
-  $p_Paypal.hide();
-  $p_Bitcoin.hide();
+  let target = $(event.target);
   if ( target.is($paypal)) {
     $ccDetails.hide();
     $p_Paypal.show();

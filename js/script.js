@@ -119,14 +119,48 @@ $mainConf.change(function(event) {
     $costUpdate.text(cost);
   }
 });
-
-//$costAlert = $("<span> Your Total is: " + '$$' + cost + " </span> ");
+// Append calculated cost to bottom of activities section
 $activities = $('.activities');
 $activities.append($costAlert);
 $costAlert.append($costUpdate);
-//Update DOM with new value of $cost
-function updateCost(cost){
 
-}
+// On page load, display credit card payment option
+$("select option[value='credit card']").attr("selected", true);
+// Display payment info for selected payment option
+const $creditCard = $("select option[value='credit card']");
+const $paypal = $("select option[value='paypal']");
+const $bitcoin = $("select option[value='bitcoin']")
+const $payment = $("select[name='user_payment']");
+const $pPaypal = $("p:contains('PayPal')");
+const $pBitcoin = $("p:contains('Bitcoin')");
+const $ccDetails = $("div[id='credit-card']").find("div, label, select");
 
-updateCost();
+// When PayPal is selected, hide other payment method details
+$payment.change(function(event) {
+  if ($paypal.attr("selected", true)) {
+    $ccDetails.hide();
+    $pPaypal.show();
+    $pBitcoin.hide();
+ }
+});
+
+// ($bitcoin.attr("selected", true)) {
+//   $ccDetails.hide();
+//   $pPaypal.hide();
+//   $pBitcoin.show();
+// } else if ($creditCard.attr("selected", true)) {
+//   $ccDetails.show();
+//   $pPaypal.hide();
+//   $pBitcoin.hide();
+// }
+//});
+
+
+
+
+
+
+
+
+
+// When Bitcoin is selected, hide other payment method details

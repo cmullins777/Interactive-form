@@ -141,22 +141,35 @@ $p_Bitcoin.hide();
 
 // When PayPal is selected, hide other payment method details
 $payment.change(function(event) {
-  if ($paypal.attr("selected", true)) {
+  let target = $((this).event.target);
+  $ccDetails.hide();
+  $p_Paypal.hide();
+  $p_Bitcoin.hide();
+  if ( target.is($paypal)) {
     $ccDetails.hide();
     $p_Paypal.show();
     $p_Bitcoin.hide();
+ } else if ( target.is($bitcoin)) {
+    $ccDetails.hide();
+    $p_Paypal.hide();
+    $p_Bitcoin.show();
+ } else if ( target.is($creditCard)) {
+   $ccDetails.show();
+   $p_Paypal.hide();
+   $p_Bitcoin.hide();
  }
 });
 
-
+//} else if ($bitcoin.attr("selected", true))
 const $register = $("button[type='submit']");
 let $nameCheck = $name.val();
-
+ /**
 $register.click(function(event) {
   if ($nameCheck === " ") {
       $name.
   }
 });
+**/
 
 
 

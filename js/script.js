@@ -136,16 +136,14 @@ const $ccDetails = $("div[id='credit-card']").find("div, label, select");
 
 //On page load, display credit card with no Paypal/Bitcoin info
 $("select option[value='credit card']").attr("selected", true);
-$p_Paypal.hide();
-$p_Bitcoin.hide();
 
 // When PayPal is selected, hide other payment method details
-$ccDetails.hide();
-$p_Paypal.hide();
-$p_Bitcoin.hide();
 
 $payment.change(function(event) {
   let target = $(event.target);
+  $ccDetails.hide();
+  $p_Paypal.hide();
+  $p_Bitcoin.hide();
   if ( target.is($paypal)) {
     $ccDetails.hide();
     $p_Paypal.show();

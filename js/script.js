@@ -9,7 +9,8 @@ FSJS project 3 - Interactive Form
   Declare global variables, including;
   Set focus on first field (name) on page load
 **/
-$name = $("input[name='user_name']")
+$name = $("input[name='user_name']");
+$email = $("input[name='user_email']");
 $name.focus();
 $( "#other-title" ).hide();
 const $otherInput = $('#other-title');
@@ -136,59 +137,55 @@ const $ccDetails = $("div[id='credit-card']").find("div, label, select");
 
 //On page load, display credit card with no Paypal/Bitcoin info
 $("select option[value='credit card']").attr("selected", true);
-
+$("option[value='select_method']").attr("disabled", true);
 // When PayPal is selected, hide other payment method details
 
 $payment.change(function(event) {
-  let target = $(event.target);
   $ccDetails.hide();
   $p_Paypal.hide();
   $p_Bitcoin.hide();
-  if ( target.is($paypal)) {
-    $ccDetails.hide();
+  if ( $creditCard.is(":selected")) {
+    $ccDetails.show();
+ } else if ( $paypal.is(":selected")) {
     $p_Paypal.show();
-    $p_Bitcoin.hide();
- } else if ( target.is($bitcoin)) {
-    $ccDetails.hide();
-    $p_Paypal.hide();
+ } else if ( $bitcoin.is(":selected")) {
     $p_Bitcoin.show();
- } else if ( target.is($creditCard)) {
-   $ccDetails.show();
-   $p_Paypal.hide();
-   $p_Bitcoin.hide();
  }
 });
 
-//} else if ($bitcoin.attr("selected", true))
-const $register = $("button[type='submit']");
+// Check that name field is not blank
+const $register = $("span[type='submit']");
 let $nameCheck = $name.val();
- /**
-$register.click(function(event) {
-  if ($nameCheck === " ") {
-      $name.
+let $emailCheck = $email.val();
+
+// Highlight name field if empty on submit
+$register.click(function() {
+  if( $nameCheck.length === 0 ) {
+    $name.attr("placeholder", "Please enter a name").css("background-color", "yellow");
   }
 });
-**/
-
-
-
-// ($bitcoin.attr("selected", true)) {
-//   $ccDetails.hide();
-//   $pPaypal.hide();
-//   $pBitcoin.show();
-// } else if ($creditCard.attr("selected", true)) {
-//   $ccDetails.show();
-//   $pPaypal.hide();
-//   $pBitcoin.hide();
-// }
-//});
-
-
-
-
-
-
-
-
-
-// When Bitcoin is selected, hide other payment method details
+// Highlight email field if empty on submit
+$register.click(function() {
+  if( $emailCheck.length === 0) {
+    $email.attr("placeholder", "Please enter an email address").css("background-color", "yellow");
+  }
+});
+// Check email validity and alert if invalid
+$register.click(function($emailCheck) {
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    if (regex.test($emailCheck)) {
+      return true;
+    } else {
+      return $email.attr("placeholder", "Please enter a valid email address").css("background-color", "yellow");
+    }
+});
+// Clear name field on user click
+$name.click(function() {
+  $name.css("background-color", "white");
+  $name.attr("placeholder", " ");
+});
+// Clear email field on user click
+$email.click(function() {
+  $email.css("backgroundcolor", "white");
+  $email.attr("placeholder", " ");
+});

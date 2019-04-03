@@ -9,8 +9,8 @@ FSJS project 3 - Interactive Form
   Declare global variables, including;
   Set focus on first field (name) on page load
 **/
-$name = $("input[name='user_name']");
-$email = $("input[name='user_email']");
+const $name = $("input[name='user_name']");
+const $email = $("input[name='user_email']");
 $name.focus();
 $( "#other-title" ).hide();
 const $otherInput = $('#other-title');
@@ -157,8 +157,6 @@ $payment.change(function(event) {
 const $register = $("button[type='submit']");
 let $nameCheck = $name.val();
 let $emailCheck = $email.val();
-console.log($nameCheck);
-console.log($emailCheck);
 
 // Highlight name field if empty on submit
 // Highlight email field if empty on submit
@@ -176,7 +174,8 @@ $register.submit(function(event) {
       return $email.attr("placeholder", "Please enter a valid email address").css("background-color", "yellow");
     }
 });
-
+console.log($nameCheck);
+console.log($emailCheck);
 // Clear name field on user click
 $name.click(function() {
   $name.css("background-color", "white");

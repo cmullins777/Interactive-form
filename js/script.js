@@ -154,33 +154,29 @@ $payment.change(function(event) {
 });
 
 // Check that name field is not blank
-const $register = $("span[type='submit']");
+const $register = $("button[type='submit']");
 let $nameCheck = $name.val();
 let $emailCheck = $email.val();
+console.log($nameCheck);
+console.log($emailCheck);
 
 // Highlight name field if empty on submit
-$register.click(function() {
+// Highlight email field if empty on submit
+// Highlight invalid email on submit
+
+$register.submit(function(event) {
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   if( $nameCheck.length === 0 ) {
     $name.attr("placeholder", "Please enter a name").css("background-color", "yellow");
-  }
-});
-
-// Highlight email field if empty on submit
-$register.click(function() {
-  if( $emailCheck.length === 0) {
+  } else if ( $emailCheck.length === 0) {
     $email.attr("placeholder", "Please enter an email address").css("background-color", "yellow");
-  }
-});
-// Check email validity and alert if invalid
-$register.click(function($emailCheck) {
-  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    if (regex.test($emailCheck)) {
-      console.log(regex.test);
+  } else if (regex.test($emailCheck)) {
       return true;
     } else {
-      $email.attr("placeholder", "Please enter a valid email address").css("background-color", "yellow");
+      return $email.attr("placeholder", "Please enter a valid email address").css("background-color", "yellow");
     }
 });
+
 // Clear name field on user click
 $name.click(function() {
   $name.css("background-color", "white");

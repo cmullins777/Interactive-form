@@ -157,12 +157,13 @@ $payment.change(function(event) {
 const $register = $("button[type='submit']");
 let $nameCheck = $name.val();
 let $emailCheck = $email.val();
-
+let $fieldset = $("fieldset[class='activities']");
+let $activityAlert = $("<span>Please select at least one activity</span>").css("font-weight", "bold");
 // Highlight name field if empty on submit
 // Highlight email field if empty on submit
 // Highlight invalid email on submit
 
-let validName = function isValidName() {
+function isValidName() {
   if ($nameCheck.length === 0) {
     $name.attr("placeholder", "Please enter a name").css("background-color", "yellow");
   } else if ($nameCheck.length > 0) {
@@ -171,7 +172,7 @@ let validName = function isValidName() {
   }
 };
 
-let validEmail = function isValidEmail() {
+function isValidEmail() {
   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   if ($emailCheck.length === 0) {
     $email.attr("placeholder", "Please enter an email address").css("background-color", "yellow");
@@ -180,15 +181,29 @@ let validEmail = function isValidEmail() {
   }
 };
 
+function isValidActivity() {
+  let $checkbox = $("input[type='checkbox']");
+  if ($("[type='checkbox']:checked").length == 0) {
+    $checkbox.parent().css("background-color", "yellow");
+    $fieldset.prepend($activityAlert);
+  } else {
+    return true;
+  }
+};
+
 $("form").submit(function(event) {
   event.preventDefault();
-  validName();
-  validEmail();
-  if (validName && validEmail) {
+  let validName = isValidName();
+  let validEmail = isValidEmail();
+  let validActivity = isValidActivity();
+  if (validName && validEmail && validActivity) {
     return true;
   } else {
-  } return false;
+    return false;
+  }
 });
+
+//valid CC = isValidCC();
 
 // Clear name field on user click
 $name.click(function() {
@@ -199,4 +214,9 @@ $name.click(function() {
 $email.click(function() {
   $email.css("background-color", "white");
   $email.attr("placeholder", " ");
+});
+
+$checkbox.click(function() {
+    $checkbox.parent().css("background-color", "#85b5ca");
+    $activityAlert.hide();
 });

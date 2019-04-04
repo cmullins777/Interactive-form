@@ -159,6 +159,8 @@ let $nameCheck = $name.val();
 let $emailCheck = $email.val();
 let $fieldset = $("fieldset[class='activities']");
 let $activityAlert = $("<span>Please select at least one activity</span>").css("font-weight", "bold");
+let $cc = $("input[name='user_cc-num']");
+let $ccCheck = $cc.val();
 // Highlight name field if empty on submit
 // Highlight email field if empty on submit
 // Highlight invalid email on submit
@@ -173,10 +175,10 @@ function isValidName() {
 };
 
 function isValidEmail() {
-  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  const eRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   if ($emailCheck.length === 0) {
     $email.attr("placeholder", "Please enter an email address").css("background-color", "yellow");
-  } else if (regex.test($emailCheck)) {
+  } else if (eRegex.test($emailCheck)) {
     return true;
   }
 };
@@ -191,32 +193,45 @@ function isValidActivity() {
   }
 };
 
+function isValidCC() {
+  const ccRegex = /^[0-9 -]{13,16}$/;
+  if ($ccCheck.length === 0) {
+    console.log($ccCheck.length);
+    console.log($cc.val());
+    $cc.attr("placeholder", "Please enter a credit card number").css("background-color", "yellow");
+  } else if (ccRegex.test($ccCheck)) {
+    $cc.css("background-color", "#accbd9");
+    return true;
+  }
+};
+
 $("form").submit(function(event) {
   event.preventDefault();
   let validName = isValidName();
   let validEmail = isValidEmail();
   let validActivity = isValidActivity();
-  if (validName && validEmail && validActivity) {
+  let validCC = isValidCC();
+  if (validName && validEmail && validActivity && validCC) {
     return true;
   } else {
     return false;
   }
 });
 
-//valid CC = isValidCC();
-
 // Clear name field on user click
 $name.click(function() {
   $name.css("background-color", "white");
-  $name.attr("placeholder", " ");
 });
 // Clear email field on user clicks field
 $email.click(function() {
   $email.css("background-color", "white");
-  $email.attr("placeholder", " ");
 });
 
 $checkbox.click(function() {
     $checkbox.parent().css("background-color", "#85b5ca");
     $activityAlert.hide();
+});
+
+$cc.click(function(){
+  $cc.css("background-color", "#accbd9");
 });

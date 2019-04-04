@@ -166,7 +166,7 @@ let $ccCheck = $cc.val();
 // Highlight invalid email on submit
 
 function isValidName() {
-  if ($nameCheck.length === 0) {
+  if ($name.val().length === 0) {
     $name.attr("placeholder", "Please enter a name").css("background-color", "yellow");
   } else if ($nameCheck.length > 0) {
     $name.css("background-color", "white");
@@ -176,7 +176,7 @@ function isValidName() {
 
 function isValidEmail() {
   const eRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  if ($emailCheck.length === 0) {
+  if ($email.val().length === 0) {
     $email.attr("placeholder", "Please enter an email address").css("background-color", "yellow");
   } else if (eRegex.test($emailCheck)) {
     return true;
@@ -194,13 +194,12 @@ function isValidActivity() {
 };
 
 function isValidCC() {
-  const ccRegex = /^[0-9 -]{13,16}$/;
-  if ($ccCheck.length === 0) {
-    console.log($ccCheck.length);
-    console.log($cc.val());
+  const ccRegex = /^d[ -]{13,16}$/;
+  if ($cc.val().length === 0) {
     $cc.attr("placeholder", "Please enter a credit card number").css("background-color", "yellow");
   } else if (ccRegex.test($ccCheck)) {
     $cc.css("background-color", "#accbd9");
+    console.log($ccCheck);
     return true;
   }
 };

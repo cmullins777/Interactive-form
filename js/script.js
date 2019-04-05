@@ -9,8 +9,20 @@ FSJS project 3 - Interactive Form
   Declare global variables, including;
   Set focus on first field (name) on page load
 **/
+const $register = $("button[type='submit']");
+let $fieldset = $("fieldset[class='activities']");
+const $activityAlert = $("<span>Please select at least one activity</span>").css("font-weight", "bold");
+const $cc = $("input[name='user_cc-num']");
+let $ccCheck = $cc.val();
+const $zip = $("input[name='user_zip']");
+let $zipCheck = $zip.val();
+const $cvv = $("input[name='user_cvv']");
+let $cvvCheck = $cvv.val();
+
 const $name = $("input[name='user_name']");
+let $nameCheck = $name.val();
 const $email = $("input[name='user_email']");
+let $emailCheck = $email.val();
 $name.focus();
 $( "#other-title" ).hide();
 const $otherInput = $('#other-title');
@@ -152,17 +164,6 @@ $payment.change(function(event) {
 });
 
 // Check that name field is not blank
-const $register = $("button[type='submit']");
-let $nameCheck = $name.val();
-let $emailCheck = $email.val();
-let $fieldset = $("fieldset[class='activities']");
-const $activityAlert = $("<span>Please select at least one activity</span>").css("font-weight", "bold");
-const $cc = $("input[name='user_cc-num']");
-let $ccCheck = $cc.val();
-const $zip = $("input[name='user_zip']");
-let $zipCheck = $zip.val();
-const $cvv = $("input[name='user_cvv']");
-let $cvvCheck = $cvv.val();
 // Highlight name field if empty on submit
 // Highlight email field if empty on submit
 // Highlight invalid email on submit
@@ -229,7 +230,6 @@ function isValidCVV() {
 };
 
 $("form").submit(function(event) {
-  event.preventDefault();
   let validName = isValidName();
   let validEmail = isValidEmail();
   let validActivity = isValidActivity();
@@ -239,7 +239,7 @@ $("form").submit(function(event) {
   if (validName && validEmail && validActivity && validCC && validZip && validCVV) {
     return true;
   } else {
-    return false;
+    event.preventDefault();
   }
 });
 

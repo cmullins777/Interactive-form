@@ -176,6 +176,7 @@ $payment.change(function(event) {
 // Highlight invalid email on submit
 
 function isValidName() {
+  $nameCheck = $name.val();
   if ($name.val().length === 0) {
     $name.attr("placeholder", "Please enter a name").css("background-color", "yellow");
     validName = false;
@@ -186,11 +187,13 @@ function isValidName() {
 };
 
 function isValidEmail() {
+  $emailCheck = $email.val();
   const eRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  console.log($emailCheck);
   if ($email.val().length === 0) {
     $email.attr("placeholder", "Please enter an email address").css("background-color", "yellow");
     validEmail = false;
-  } else if (eRegex.test($email.val())) {
+  } else if (eRegex.test($emailCheck)) {
     validEmail = true;
   } else {
     $email.css("background-color", "yellow");
@@ -262,13 +265,17 @@ function isValidCVV() {
 $("form").submit(function(event) {
   event.preventDefault();
   isValidName();
+  console.log(validName);
+  console.log($nameCheck);
   isValidEmail();
+  console.log(validEmail);
+  console.log($emailCheck);
   isValidActivity();
   isValidCC();
   isValidZip();
   isValidCVV();
   console.log(validEmail);
-  console.log($email.val());
+  console.log($emailCheck);
   if (validName && validEmail && validActivity && validCC && validZip && validCVV) {
     return true;
 //  } else {

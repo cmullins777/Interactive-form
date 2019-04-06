@@ -9,6 +9,13 @@ FSJS project 3 - Interactive Form
   Declare global variables, including;
   Set focus on first field (name) on page load
 **/
+let validName = false;
+let validEmail = false;
+let validActivity = false;
+let validCC = false;
+let validZip = false;
+let validCVV = false;
+
 const $register = $("button[type='submit']");
 let $fieldset = $("fieldset[class='activities']");
 const $activityAlert = $("<span>Please select at least one activity</span>").css("font-weight", "bold");
@@ -172,7 +179,7 @@ function isValidName() {
   if ($name.val().length === 0) {
     $name.attr("placeholder", "Please enter a name").css("background-color", "yellow");
     validName = false;
-  } else if ($nameCheck.length > 0) {
+  } else if ($name.val().length > 0) {
     $name.css("background-color", "white");
     validName = true;
   }
@@ -183,8 +190,11 @@ function isValidEmail() {
   if ($email.val().length === 0) {
     $email.attr("placeholder", "Please enter an email address").css("background-color", "yellow");
     validEmail = false;
-  } else if (eRegex.test($emailCheck)) {
+  } else if (eRegex.test($email.val())) {
     validEmail = true;
+  } else {
+    $email.css("background-color", "yellow");
+    validEmail = false;
   }
 };
 
@@ -200,17 +210,18 @@ function isValidActivity() {
 };
 
 function isValidCC($ccCheck) {
-  const ccRegex = /([0-9]{13,16})/;
-  if ($cc.val().length === 0) {
+  const ccRegex = /(\d{13,16})/;
+  let ccVal = $cc.val;
+    if ($cc.val().length === 0) {
     $cc.attr("placeholder", "Please enter a credit card number").css("background-color", "yellow");
     validCC = false;
-  } else if (ccRegex.test($cc.val())) {
+  } else if (ccRegex.test(ccVal)) {
     $cc.css("background-color", "#accbd9");
-    console.log($cc.val());
+    console.log(ccVal);
     validCC = true;
   } else {
-    $cc.attr("placeholder", "Please enter a valid credit card number").css("background-color", "yellow");
-    console.log($cc.val());
+    $cc.css("background-color", "yellow");
+  //  console.log($cc.val());
     validCC = false;
   }
 };
@@ -249,16 +260,19 @@ function isValidCVV() {
 };
 
 $("form").submit(function(event) {
-  let validName = isValidName();
-  let validEmail = isValidEmail();
-  let validActivity = isValidActivity();
-  let validCC = isValidCC();
-  let validZip = isValidZip();
-  let validCVV = isValidCVV();
+  event.preventDefault();
+  isValidName();
+  isValidEmail();
+  isValidActivity();
+  isValidCC();
+  isValidZip();
+  isValidCVV();
+  console.log(validEmail);
+  console.log($email.val());
   if (validName && validEmail && validActivity && validCC && validZip && validCVV) {
     return true;
-  } else {
-    event.preventDefault();
+//  } else {
+//    event.preventDefault();
   }
 });
 

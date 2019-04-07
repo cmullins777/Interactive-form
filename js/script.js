@@ -28,7 +28,7 @@ let $zipCheck = $zip.val();
 const $cvv = $("input[name='user_cvv']");
 let $cvvCheck = $cvv.val();
 
-//Set focus on first field (name) on page load
+//Set focus on name field on page load
 $name.focus();
 
 // Under Job Role, hide "Other" job input field on page load
@@ -180,7 +180,7 @@ function isValidName() {
     $name.attr("placeholder", "Please enter a name").css("background-color", "yellow");
     validName = false;
   } else if ($name.val().length > 0) {
-    $name.css("background-color", "white");
+    $name.css("background-color", "#accbd9");
     validName = true;
   }
 };
@@ -210,13 +210,14 @@ function isValidActivity() {
   }
 };
 // Check for valid credit card number and set validCC to true for use in submit function
+// Reset $ccCheck to currently entered data
 function isValidCC() {
-  const ccRegex = /(\d{13,16})/;
+  const ccRegex = /^[0-9]{13,16}$/;
   $ccCheck = $cc.val();
     if ($cc.val().length === 0) {
     $cc.attr("placeholder", "Please enter a credit card number").css("background-color", "yellow");
     validCC = false;
-  } else if (ccRegex.test($cc.val())) {
+  } else if (ccRegex.test($ccCheck)) {
     $cc.css("background-color", "#accbd9");
     validCC = true;
   } else {
@@ -225,13 +226,14 @@ function isValidCC() {
   }
 };
 // Check for valid zip and set validZip to true for use in submit function
+// Reset $zipCheck to currently entered data
 function isValidZip() {
-  const zipRegex = /\d{5}/;
+  const zipRegex = /^[0-9]{5}$/;
   $zipCheck = $zip.val();
   if ($zip.val().length === 0) {
     $zip.attr("placeholder", "Please enter a valid zip code").css("background-color", "yellow");
     validZip = false;
-  } else if (zipRegex.test($zip.val())) {
+  } else if (zipRegex.test($zipCheck)) {
     $zip.css("background-color", "#accbd9");
     validZip = true;
   } else {
@@ -240,22 +242,25 @@ function isValidZip() {
   }
 };
 // Check for valid CVV code and set validCVV to true for use in submit function
+// Reset $cvvCheck to currently entered data
 function isValidCVV() {
-    const cvvRegex = /\d{3}/;
+    const cvvRegex = /^[0-9]{3}$/;
     $cvvCheck = $cvv.val();
     if (($cvv.val().length === 0)) {
       $cvv.attr("placeholder", "Please enter a valid CVV code.").css("background-color", "yellow");
       validCVV = false;
-    } else if (cvvRegex.test($cvvCheck) != true) {
+    } else if (cvvRegex.test($cvvCheck)) {
+      $cvv.css("background-color", "#accbd9");
+      validCVV = true;
+    } else {
       $cvv.attr("style", "background:yellow");
       validCVV = false;
-    } else if (cvvRegex.test($cvv.val()))  {
-      validCVV = true;
     }
 };
 
 // Run valiation function checks on submit
 $("form").submit(function(event) {
+//  event.preventDefault();
   isValidName();
   if (validName === false) {
     event.preventDefault();

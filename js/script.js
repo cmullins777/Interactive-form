@@ -2,13 +2,10 @@
 Treehouse Techdegree:
 FSJS project 3 - Interactive Form
 ******************************************/
-/*
+
 // Study guide for this project - https://teamtreehouse.com/projects/interactive-form
 
-/***
-  Declare global variables, including;
-  Set focus on first field (name) on page load
-**/
+// Set all validity checksfor form submission to false
 let validName = false;
 let validEmail = false;
 let validActivity = false;
@@ -16,6 +13,11 @@ let validCC = false;
 let validZip = false;
 let validCVV = false;
 
+// Define input field variables and their content check variables
+const $name = $("input[name='user_name']");
+let $nameCheck = $name.val();
+const $email = $("input[name='user_email']");
+let $emailCheck = $email.val();
 const $register = $("button[type='submit']");
 let $fieldset = $("fieldset[class='activities']");
 const $activityAlert = $("<span>Please select at least one activity</span>").css("font-weight", "bold");
@@ -26,14 +28,13 @@ let $zipCheck = $zip.val();
 const $cvv = $("input[name='user_cvv']");
 let $cvvCheck = $cvv.val();
 
-const $name = $("input[name='user_name']");
-let $nameCheck = $name.val();
-const $email = $("input[name='user_email']");
-let $emailCheck = $email.val();
+//Set focus on first field (name) on page load
 $name.focus();
+
+// Under Job Role, hide "Other" job input field on page load
 $( "#other-title" ).hide();
 const $otherInput = $('#other-title');
-
+// Show "Other" input field when "Other" is selected
 $("#title").on('change', function() {
   if ($(this).val() === 'other') {
     return $otherInput.show();
@@ -42,7 +43,7 @@ $("#title").on('change', function() {
   }
 });
 
-  //Assign color option values to variables
+// Assign color option values to variables
 const $cornflowerblue = $("#color option[value='cornflowerblue']");
 const $darkslategrey = $("#color option[value='darkslategrey']");
 const $gold = $("#color option[value='gold']");
@@ -51,7 +52,7 @@ const $steelblue = $("#color option[value='steelblue']");
 const $dimgrey = $("#color option[value='dimgrey']");
 const $colorMenu = $("#colorMenu");
 
-//  Show or hide color options depending on selected design
+// Show or hide color options depending on selected design
 $("#design").on('change', function() {
   if ($(this).val() === 'js puns') {
     $colorMenu.prop("selected",true);
@@ -70,6 +71,7 @@ $("#design").on('change', function() {
   }
 });
 
+// Define Activity variables
 const $checkbox = $("input[type='checkbox']");
 const $jsFrameworks = $("input[name='js-frameworks']");
 const $express = $("input[name='express']");
@@ -78,12 +80,14 @@ const $node = $("input[name='node']");
 const $mainConf = $("input[name='all']");
 const $buildTools = $("input[name='build-tools']");
 const $npm = $("input[name='npm']");
+
+// Initialize cost at zero and append cost info at bottom of Activities fieldset
 let cost = 0;
 let $costUpdate = $("<span name='costUpdate'> 0 </span>");
 let $costAlert = $("<span> Your Total is: " + '$' + " </span> ");
 
-//  Deselect conflicting activities when one is selected
-//  Reinstate option if checkbox is unclicked
+// Deselect conflicting activities when one is selected
+// If JS Frameworks workshop selected, hide Express workshop
 $($jsFrameworks).click(function() {
   if ($jsFrameworks.prop('checked')) {
     $express.attr('disabled', 'disabled').parent().css("text-decoration", "line-through");
@@ -91,7 +95,7 @@ $($jsFrameworks).click(function() {
     $express.attr('disabled', false).parent().css("text-decoration", "none");
   }
 });
-
+// If Express workshop selected, hide JS Frameworks workshop
 $($express).click(function() {
   if ($express.prop('checked')) {
     $jsFrameworks.attr('disabled', 'disabled').parent().css("text-decoration", "line-through");
@@ -99,7 +103,7 @@ $($express).click(function() {
     $jsFrameworks.attr('disabled', false).parent().css("text-decoration", "none");
   }
 });
-
+// If JS Libraries workshop selected, hide Node.js workshop
 $($jsLibs).click(function() {
   if ($jsLibs.prop('checked')) {
     $node.attr('disabled', 'disabled').parent().css("text-decoration", "line-through");
@@ -107,7 +111,7 @@ $($jsLibs).click(function() {
     $node.attr('disabled', false).parent().css("text-decoration", "none");
   }
 });
-
+// If Node.js workshop selected, hide JS Libraries workshop
 $($node).click(function() {
   if ($node.prop('checked')) {
     $jsLibs.attr('disabled', 'disabled').parent().css("text-decoration", "line-through");
@@ -117,7 +121,6 @@ $($node).click(function() {
 });
 
 //Display running total for selected Activities
-//Add, Subtract extra $100 for Main Conference
 $checkbox.change(function(event) {
     if ($(this).prop('checked')) {
     cost += 100;
@@ -127,7 +130,7 @@ $checkbox.change(function(event) {
     $costUpdate.text(cost);
   }
 });
-
+// Add/subtract extra $100 for Main Conference activity
 $mainConf.change(function(event) {
     if ($(this).prop('checked')) {
     cost += 100;
@@ -143,7 +146,7 @@ $activities = $('.activities');
 $activities.append($costAlert);
 $costAlert.append($costUpdate);
 
-// Display payment info for selected payment option
+// Define payment info variables for selected payment option
 const $creditCard = $("select option[value='credit card']");
 const $paypal = $("select option[value='paypal']");
 const $bitcoin = $("select option[value='bitcoin']")
@@ -155,8 +158,8 @@ const $ccDetails = $("div[id='credit-card']").find("div, label, select");
 //On page load, display credit card with no Paypal/Bitcoin info
 $("select option[value='credit card']").attr("selected", true);
 $("option[value='select_method']").attr("disabled", true);
-// When PayPal is selected, hide other payment method details
 
+// When one payment type is selected, hide other payment method details
 $payment.change(function(event) {
   $ccDetails.hide();
   $p_Paypal.hide();
@@ -170,11 +173,7 @@ $payment.change(function(event) {
  }
 });
 
-// Check that name field is not blank
-// Highlight name field if empty on submit
-// Highlight email field if empty on submit
-// Highlight invalid email on submit
-
+// Check for presence of name and set validName to true for use in submit function
 function isValidName() {
   $nameCheck = $name.val();
   if ($name.val().length === 0) {
@@ -185,7 +184,7 @@ function isValidName() {
     validName = true;
   }
 };
-
+// Check for valid email and set validEmail to true for use in submit function
 function isValidEmail() {
   $emailCheck = $email.val();
   const eRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -195,11 +194,11 @@ function isValidEmail() {
   } else if (eRegex.test($emailCheck)) {
     validEmail = true;
   } else {
-    $email.css("background-color", "yellow");
+    $email.attr("style", "background:yellow");
     validEmail = false;
   }
 };
-
+// Check at least one activity selected and set validActivity to true for use in submit function
 function isValidActivity() {
   let $checkbox = $("input[type='checkbox']");
   if ($("[type='checkbox']:checked").length == 0) {
@@ -210,7 +209,7 @@ function isValidActivity() {
     validActivity = true;
   }
 };
-
+// Check for valid credit card number and set validCC to true for use in submit function
 function isValidCC() {
   const ccRegex = /(\d{13,16})/;
   $ccCheck = $cc.val();
@@ -221,11 +220,11 @@ function isValidCC() {
     $cc.css("background-color", "#accbd9");
     validCC = true;
   } else {
-    $cc.css("background-color", "yellow");
+    $cc.attr("style", "background:yellow");
     validCC = false;
   }
 };
-
+// Check for valid zip and set validZip to true for use in submit function
 function isValidZip() {
   const zipRegex = /\d{5}/;
   $zipCheck = $zip.val();
@@ -236,78 +235,85 @@ function isValidZip() {
     $zip.css("background-color", "#accbd9");
     validZip = true;
   } else {
-    $zip.css("background-color", "yellow");
+    $zip.attr("style", "background:yellow");
     validZip = false;
   }
 };
-
+// Check for valid CVV code and set validCVV to true for use in submit function
 function isValidCVV() {
     const cvvRegex = /\d{3}/;
     $cvvCheck = $cvv.val();
-    console.log($cvv);
-    if ($cvv.val().length === 0) {
+    if (($cvv.val().length === 0)) {
       $cvv.attr("placeholder", "Please enter a valid CVV code.").css("background-color", "yellow");
       validCVV = false;
-    } else if (cvvRegex.test($cvv.val()))  {
-      $cvv.css("background-color", "#accbd9");
-      validCVV = true;
-    } else {
-      $cvv.css("background-color", "yellow");
+    } else if (cvvRegex.test($cvvCheck) != true) {
+      $cvv.attr("style", "background:yellow");
       validCVV = false;
+    } else if (cvvRegex.test($cvv.val()))  {
+      validCVV = true;
     }
 };
 
+// Run valiation function checks on submit
 $("form").submit(function(event) {
-  event.preventDefault();
   isValidName();
-  console.log(validName);
-  console.log($nameCheck);
+  if (validName === false) {
+    event.preventDefault();
+  }
   isValidEmail();
-  console.log(validEmail);
-  console.log($emailCheck);
+  if (validEmail === false) {
+    event.preventDefault();
+  }
   isValidActivity();
-  isValidCC();
-  console.log(validCC);
-  console.log($ccCheck);
-  isValidZip();
-  console.log(validZip);
-  console.log($zipCheck);
-  isValidCVV();
-  console.log(validCVV);
-  console.log($cvvCheck);
-  if (validName && validEmail && validActivity && validCC && validZip && validCVV) {
-    return true;
-//  } else {
-//    event.preventDefault();
+  if (validActivity === false) {
+    event.preventDefault();
+  }
+//  If Credit Card payment selected, run additional checks on required fields
+  if ( $creditCard.is(":selected")) {
+    isValidCC();
+    if (validCC === false) {
+      console.log($ccCheck);
+      event.preventDefault();
+    }
+    isValidZip();
+    if (validZip === false) {
+      console.log($zipCheck);
+      event.preventDefault();
+    }
+    isValidCVV();
+    if (validCVV === false) {
+      console.log($cvvCheck);
+      event.preventDefault();
+    }
   }
 });
 
-// Clear name field on user click
+// Clear name field and remove error styling on user click
 $name.click(function() {
-  $name.css("background-color", "white");
+  $name.css("background-color", "#accbd9");
   $name.val(" ");
 });
-// Clear email field on user clicks field
+// Clear email field on user click
 $email.click(function() {
-  $email.css("background-color", "white");
+  $email.css("background-color", "#accbd9");
   $email.val(" ");
 });
-
+// Hide activity alert when checkbox is selected
 $checkbox.click(function() {
   $checkbox.parent().css("background-color", "#85b5ca");
   $activityAlert.hide();
 });
-
+// Clear credit card field on user click
 $cc.click(function(){
   $cc.css("background-color", "#accbd9");
   $cc.val(" ");
 });
-
+// Clear zip field on user click
 $zip.click(function(){
   $zip.css("background-color", "#accbd9");
   $zip.val(" ");
 });
-
+// Clear cvv field on user click
 $cvv.click(function(){
   $cvv.css("background-color", "#accbd9");
   $cvv.val(" ");

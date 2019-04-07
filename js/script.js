@@ -181,7 +181,7 @@ function isValidName() {
     $name.attr("placeholder", "Please enter a name").css("background-color", "yellow");
     validName = false;
   } else if ($name.val().length > 0) {
-    $name.attr("placeholder", " ").css("background-color", "white");
+    $name.css("background-color", "white");
     validName = true;
   }
 };
@@ -195,7 +195,7 @@ function isValidEmail() {
   } else if (eRegex.test($emailCheck)) {
     validEmail = true;
   } else {
-    $email.attr("placeholder", " ").css("background-color", "yellow");
+    $email.css("background-color", "yellow");
     validEmail = false;
   }
 };
@@ -221,7 +221,7 @@ function isValidCC() {
     $cc.css("background-color", "#accbd9");
     validCC = true;
   } else {
-    $cc.attr("placeholder", "Please enter a credit card number").css("background-color", "yellow");
+    $cc.css("background-color", "yellow");
     validCC = false;
   }
 };
@@ -236,7 +236,7 @@ function isValidZip() {
     $zip.css("background-color", "#accbd9");
     validZip = true;
   } else {
-    $zip.attr("placeholder", "Please enter a valid zip code").css("background-color", "yellow");
+    $zip.css("background-color", "yellow");
     validZip = false;
   }
 };
@@ -244,14 +244,15 @@ function isValidZip() {
 function isValidCVV() {
     const cvvRegex = /\d{3}/;
     $cvvCheck = $cvv.val();
+    console.log($cvv);
     if ($cvv.val().length === 0) {
       $cvv.attr("placeholder", "Please enter a valid CVV code.").css("background-color", "yellow");
       validCVV = false;
     } else if (cvvRegex.test($cvv.val()))  {
       $cvv.css("background-color", "#accbd9");
       validCVV = true;
-    } else if (cvvRegex.test($cvv.val()) != true){
-      $cvv.attr("placeholder", "Please enter a valid CVV code.").css("background-color", "yellow");
+    } else {
+      $cvv.css("background-color", "yellow");
       validCVV = false;
     }
 };

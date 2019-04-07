@@ -181,7 +181,7 @@ function isValidName() {
     $name.attr("placeholder", "Please enter a name").css("background-color", "yellow");
     validName = false;
   } else if ($name.val().length > 0) {
-    $name.css("background-color", "white");
+    $name.attr("placeholder", " ").css("background-color", "white");
     validName = true;
   }
 };
@@ -189,14 +189,13 @@ function isValidName() {
 function isValidEmail() {
   $emailCheck = $email.val();
   const eRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-  console.log($emailCheck);
   if ($email.val().length === 0) {
     $email.attr("placeholder", "Please enter an email address").css("background-color", "yellow");
     validEmail = false;
   } else if (eRegex.test($emailCheck)) {
     validEmail = true;
   } else {
-    $email.css("background-color", "yellow");
+    $email.attr("placeholder", " ").css("background-color", "yellow");
     validEmail = false;
   }
 };
@@ -212,52 +211,47 @@ function isValidActivity() {
   }
 };
 
-function isValidCC($ccCheck) {
+function isValidCC() {
   const ccRegex = /(\d{13,16})/;
-  let ccVal = $cc.val;
+  $ccCheck = $cc.val();
     if ($cc.val().length === 0) {
     $cc.attr("placeholder", "Please enter a credit card number").css("background-color", "yellow");
     validCC = false;
-  } else if (ccRegex.test(ccVal)) {
+  } else if (ccRegex.test($cc.val())) {
     $cc.css("background-color", "#accbd9");
-    console.log(ccVal);
     validCC = true;
   } else {
-    $cc.css("background-color", "yellow");
-  //  console.log($cc.val());
+    $cc.attr("placeholder", "Please enter a credit card number").css("background-color", "yellow");
     validCC = false;
   }
 };
 
 function isValidZip() {
-  const zipRegex = /^[0-9]{5}$/;
+  const zipRegex = /\d{5}/;
+  $zipCheck = $zip.val();
   if ($zip.val().length === 0) {
     $zip.attr("placeholder", "Please enter a valid zip code").css("background-color", "yellow");
     validZip = false;
   } else if (zipRegex.test($zip.val())) {
     $zip.css("background-color", "#accbd9");
-    console.log($zip.val());
     validZip = true;
   } else {
-    $zip.attr("placeholder", "Please enter a valid zip code.").css("background-color", "yellow");
-    console.log($zip.val());
+    $zip.attr("placeholder", "Please enter a valid zip code").css("background-color", "yellow");
     validZip = false;
   }
 };
 
 function isValidCVV() {
-    const cvvRegex = /^\d{3}$/;
+    const cvvRegex = /\d{3}/;
+    $cvvCheck = $cvv.val();
     if ($cvv.val().length === 0) {
       $cvv.attr("placeholder", "Please enter a valid CVV code.").css("background-color", "yellow");
-      console.log($cvv.val());
       validCVV = false;
     } else if (cvvRegex.test($cvv.val()))  {
       $cvv.css("background-color", "#accbd9");
-      console.log($cvv.val());
       validCVV = true;
-    } else {
+    } else if (cvvRegex.test($cvv.val()) != true){
       $cvv.attr("placeholder", "Please enter a valid CVV code.").css("background-color", "yellow");
-      console.log($cvv.val());
       validCVV = false;
     }
 };
@@ -272,10 +266,14 @@ $("form").submit(function(event) {
   console.log($emailCheck);
   isValidActivity();
   isValidCC();
+  console.log(validCC);
+  console.log($ccCheck);
   isValidZip();
+  console.log(validZip);
+  console.log($zipCheck);
   isValidCVV();
-  console.log(validEmail);
-  console.log($emailCheck);
+  console.log(validCVV);
+  console.log($cvvCheck);
   if (validName && validEmail && validActivity && validCC && validZip && validCVV) {
     return true;
 //  } else {
@@ -295,8 +293,8 @@ $email.click(function() {
 });
 
 $checkbox.click(function() {
-    $checkbox.parent().css("background-color", "#85b5ca");
-    $activityAlert.hide();
+  $checkbox.parent().css("background-color", "#85b5ca");
+  $activityAlert.hide();
 });
 
 $cc.click(function(){

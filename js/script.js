@@ -157,6 +157,8 @@ const $ccDetails = $("div[id='credit-card']").find("div, label, select");
 
 //On page load, display credit card with no Paypal/Bitcoin info
 $("select option[value='credit card']").attr("selected", true);
+$p_Paypal.hide();
+$p_Bitcoin.hide();
 $("option[value='select_method']").attr("disabled", true);
 
 // When one payment type is selected, hide other payment method details
@@ -187,7 +189,7 @@ function isValidName() {
 // Check for valid email and set validEmail to true for use in submit function
 function isValidEmail() {
   $emailCheck = $email.val();
-  const eRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  const eRegex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/gm;
   if ($email.val().length === 0) {
     $email.attr("placeholder", "Please enter an email address").css("background-color", "yellow");
     validEmail = false;
@@ -212,7 +214,7 @@ function isValidActivity() {
 // Check for valid credit card number and set validCC to true for use in submit function
 // Reset $ccCheck to currently entered data
 function isValidCC() {
-  const ccRegex = /^[0-9]{13,16}$/;
+  const ccRegex = /^\d{13,16}$/gm;
   $ccCheck = $cc.val();
     if ($cc.val().length === 0) {
     $cc.attr("placeholder", "Please enter a credit card number").css("background-color", "yellow");
@@ -228,7 +230,7 @@ function isValidCC() {
 // Check for valid zip and set validZip to true for use in submit function
 // Reset $zipCheck to currently entered data
 function isValidZip() {
-  const zipRegex = /^[0-9]{5}$/;
+  const zipRegex = /^[0-9]{5}$/gm;
   $zipCheck = $zip.val();
   if ($zip.val().length === 0) {
     $zip.attr("placeholder", "Please enter a valid zip code").css("background-color", "yellow");
@@ -244,7 +246,7 @@ function isValidZip() {
 // Check for valid CVV code and set validCVV to true for use in submit function
 // Reset $cvvCheck to currently entered data
 function isValidCVV() {
-    const cvvRegex = /^[0-9]{3}$/;
+    const cvvRegex = /^[0-9]{3}$/gm;
     $cvvCheck = $cvv.val();
     if (($cvv.val().length === 0)) {
       $cvv.attr("placeholder", "Please enter a valid CVV code.").css("background-color", "yellow");
@@ -301,7 +303,7 @@ $name.click(function() {
 // Clear email field on user click
 $email.click(function() {
   $email.css("background-color", "#accbd9");
-  $email.val(" ");
+  $email.val("");
 });
 // Hide activity alert when checkbox is selected
 $checkbox.click(function() {
@@ -311,15 +313,15 @@ $checkbox.click(function() {
 // Clear credit card field on user click
 $cc.click(function(){
   $cc.css("background-color", "#accbd9");
-  $cc.val(" ");
+  $cc.val("");
 });
 // Clear zip field on user click
 $zip.click(function(){
   $zip.css("background-color", "#accbd9");
-  $zip.val(" ");
+  $zip.val("");
 });
 // Clear cvv field on user click
 $cvv.click(function(){
   $cvv.css("background-color", "#accbd9");
-  $cvv.val(" ");
+  $cvv.val("");
 });
